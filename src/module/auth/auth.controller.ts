@@ -1,71 +1,43 @@
-import {
-	Body,
-	Controller,
-	HttpCode,
-	HttpStatus,
-	Post,
-	Req,
-	Res,
-	UnauthorizedException,
-} from '@nestjs/common';
-import type { Request, Response } from 'express';
+import { Body, Controller, Post, Req } from '@nestjs/common';
+import type { Request } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import {
-	ACCESS_COOKIE,
-	REFRESH_COOKIE,
-	clearAuthCookies,
-	setAuthCookies,
-} from '../../common/utils/cookie.util';
+import { EnableTwoFactorDto, DisableTwoFactorDto, VerifyTwoFactorDto } from './dto/two-factor.dto';
+import { Api } from '@app/common';
+import { GetDecodedToken } from '@app/common/decorators';
 
-@Controller('auth')
+@Controller(Api.AUTH_PATH)
 export class AuthController {
-	constructor(private readonly auth: AuthService) {}
+	constructor(private readonly authService: AuthService) {}
 
-	@Post('register')
-	async register(
-		@Body() dto: RegisterDto,
-		@Res({ passthrough: true }) res: Response,
-	) {
-		const tokens = await this.auth.register(dto);
-		setAuthCookies(res, tokens.accessToken, tokens.refreshToken, tokens.accessTtlSeconds, tokens.refreshTtlSeconds);
-		return { success: true };
+	@Post(Api.LOGIN_PATH)
+	login(@Body() dto: LoginDto) {
+		return this.authService.login(dto);
 	}
 
-	@Post('login')
-	@HttpCode(HttpStatus.OK)
-	async login(
-		@Body() dto: LoginDto,
-		@Res({ passthrough: true }) res: Response,
-	) {
-		const tokens = await this.auth.login(dto);
-		setAuthCookies(res, tokens.accessToken, tokens.refreshToken, tokens.accessTtlSeconds, tokens.refreshTtlSeconds);
-		return { success: true };
+	@Post(Api.REFRESH_TOKEN_PATH)
+	refresh(@Req() req: Request) {
+		const refreshToken = req.cookies?.refreshToken ?? req.body?.refreshToken;
+		return this.authService.refreshToken(refreshToken);
 	}
 
-	@Post('refresh')
-	@HttpCode(HttpStatus.OK)
-	async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-		const refreshToken = req.cookies?.[REFRESH_COOKIE];
-		if (!refreshToken) throw new UnauthorizedException('Missing refresh token');
-
-		try {
-			const tokens = await this.auth.refresh(refreshToken);
-			setAuthCookies(res, tokens.accessToken, tokens.refreshToken, tokens.accessTtlSeconds, tokens.refreshTtlSeconds);
-			return { success: true };
-		} catch (err) {
-			clearAuthCookies(res);
-			throw err;
-		}
+	@Post(Api.TWO_FACTOR_GENERATE)
+	generateTwoFactor(@GetDecodedToken() user: any) {
+		return this.authService.generateTwoFactorSecret(user?.id);
 	}
 
-	@Post('logout')
-	@HttpCode(HttpStatus.NO_CONTENT)
-	async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-		const accessToken = req.cookies?.[ACCESS_COOKIE];
-		const refreshToken = req.cookies?.[REFRESH_COOKIE];
-		await this.auth.logout(accessToken, refreshToken);
-		clearAuthCookies(res);
+	@Post(Api.TWO_FACTOR_ENABLE)
+	enableTwoFactor(@GetDecodedToken() user: any, @Body() dto: EnableTwoFactorDto) {
+		return this.authService.enableTwoFactor(user?.id, dto.token, dto.secret);
+	}
+
+	@Post(Api.TWO_FACTOR_DISABLE)
+	disableTwoFactor(@GetDecodedToken() user: any, @Body() dto: DisableTwoFactorDto) {
+		return this.authService.disableTwoFactor(user?.id, dto.token, dto.password);
+	}
+
+	@Post(Api.TWO_FACTOR_VERIFY)
+	verifyTwoFactor(@Body() dto: VerifyTwoFactorDto) {
+		return this.authService.verifyTwoFactorLogin(dto.tempToken, dto.token);
 	}
 }

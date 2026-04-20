@@ -11,11 +11,23 @@ export class UserRepository {
 		return new this.users(data).save();
 	}
 
-	findById(id: string): Promise<User | null> {
+	save(user: User): Promise<User> {
+		return user.save();
+	}
+
+	getUserById(id: string): Promise<User | null> {
 		return this.users.findById(id).exec();
 	}
 
 	findByEmail(email: string): Promise<User | null> {
-		return this.users.findOne({ email: email.toLowerCase() }).exec();
+		return this.users.findOne({ email: email.toLowerCase() }).select('+password').exec();
+	}
+
+	getUserByEmailWithLegalEntity(email: string): Promise<User | null> {
+		return this.users.findOne({ email: email.toLowerCase() }).select('+password').exec();
+	}
+
+	getUserWithTwoFactorSecret(id: string): Promise<User | null> {
+		return this.users.findById(id).select('+twoFactorSecret').exec();
 	}
 }

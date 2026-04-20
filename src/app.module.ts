@@ -6,8 +6,10 @@ import { DataModule } from './module/data/data.module';
 import { SharedModule } from './module/shared/shared.module';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RedisModule } from '@nestjs-modules/ioredis';
 import * as path from 'path';
-import { Api, Env, GlobalResponseInterceptor, Language } from './common';
+import { Env, GlobalResponseInterceptor, Language } from './common';
+import { ioredisConfig } from './config/ioredis.config';
 import * as fs from 'fs';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 
@@ -34,8 +36,10 @@ import { GlobalExceptionFilter } from './common/filter/global-exception.filter';
         user: Env.MONGO_USER,
         pass: Env.MONGO_PASSWORD,
         dbName: Env.MONGO_DATABASE,
+        authSource: 'admin',
       },
     ),
+    RedisModule.forRoot(ioredisConfig),
     DataModule,
     AuthModule,
     SharedModule,

@@ -3,9 +3,9 @@ services:
     image: mongo:7
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: hrpsi_admin
-      MONGO_INITDB_ROOT_PASSWORD: hrpsi_local_pw
-      MONGO_INITDB_DATABASE: hrpsi_db
+      MONGO_INITDB_ROOT_USERNAME: recruitment_admin
+      MONGO_INITDB_ROOT_PASSWORD: recruitment_local_pw
+      MONGO_INITDB_DATABASE: recruitment_db
     ports:
       - "27017:27017"
     volumes:
@@ -19,13 +19,13 @@ services:
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    command: ["redis-server", "--requirepass", "hrpsi_local_pw", "--appendonly", "yes"]
+    command: ["redis-server", "--requirepass", "recruitment_local_pw", "--appendonly", "yes"]
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "hrpsi_local_pw", "ping"]
+      test: ["CMD", "redis-cli", "-a", "recruitment_local_pw", "ping"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -35,8 +35,8 @@ services:
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: hrpsi_admin
-      MINIO_ROOT_PASSWORD: hrpsi_local_pw
+      MINIO_ROOT_USER: recruitment_admin
+      MINIO_ROOT_PASSWORD: recruitment_local_pw
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -56,9 +56,9 @@ services:
     restart: "no"
     entrypoint: >
       /bin/sh -c "
-      mc alias set local http://minio:9000 hrpsi_admin hrpsi_local_pw &&
-      mc mb --ignore-existing local/hrpsi &&
-      mc anonymous set download local/hrpsi
+      mc alias set local http://minio:9000 recruitment_admin recruitment_local_pw &&
+      mc mb --ignore-existing local/recruitment &&
+      mc anonymous set download local/recruitment
       "
 
   app:

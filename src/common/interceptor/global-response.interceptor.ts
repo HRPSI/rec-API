@@ -78,7 +78,9 @@ export class GlobalResponseInterceptor implements NestInterceptor {
 		}
 
 		// Finalise -----------------------------------------------------------------
-		const res = context.switchToHttp().getResponse();
+		const http = context.switchToHttp();
+		const res = http.getResponse();
+		const req = http.getRequest();
 
 		// Set cookies if present
 		if (data?.response?.cookies) {
@@ -92,7 +94,7 @@ export class GlobalResponseInterceptor implements NestInterceptor {
 
 		res.status(data?.response?.keepOk ? StatusCode.OK : responseObj.statusCode);
 
-		this.logger.verbose(`Response: ${JSON.stringify(responseObj)}`);
+		this.logger.verbose(`${req.method} ${req.originalUrl ?? req.url} -> ${JSON.stringify(responseObj)}`);
 		return responseObj;
 	}
 }

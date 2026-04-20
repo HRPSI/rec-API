@@ -1,12 +1,6 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
-export class LoginDto {
-	@IsEmail()
-	email: string;
-
-	@IsString()
-	password: string;
-
+export class RegisterDeviceDto {
 	@IsString()
 	deviceId: string;
 
