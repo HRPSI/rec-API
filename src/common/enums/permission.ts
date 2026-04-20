@@ -1,0 +1,53 @@
+export enum PermissionSortField {
+	Id = 'id',
+	Resource = 'resource',
+	Action = 'action',
+}
+
+export enum PermissionResource {
+	Dashboard = 'Dashboard',
+	Employees = 'Employees',
+	// Payroll = 'Payroll',
+	Payroll = 'Payroll',
+	Period = 'Period',
+	CycleSettings = 'PayrollCycleSettings',
+	FiscalYears = 'FiscalYears',
+	PayGroups = 'PayGroups',
+	BankAccounts = 'BankAccounts',
+	CurrencyRates = 'CurrencyRates',
+	GLCodes = 'GLCodes',
+	CostCenters = 'CostCenters',
+	ValueFormats = 'ValueFormats',
+	ProfitCenters = 'ProfitCenters',
+	CalculationFields = 'CalculationFields',
+	Regulations = 'Regulations',
+	// Settings = 'Settings',
+	GeneralSettings = 'GeneralSettings',
+	PayElements = 'PayElements',
+	FieldGroups = 'FieldGroups',
+	FormulaGuide = 'FormulaGuide',
+	// Reports = 'Reports',
+	MasterData = 'MasterData',
+	Templates = 'Templates',
+	// Management = 'Management',
+	Users = 'Users',
+	LegalEntities = 'LegalEntities',
+	Announcements = 'Announcements',
+	Releases = 'Releases',
+	AccessControl = 'AccessControl',
+	Files = 'Files',
+	Notification = 'Notification',
+	Calendar = 'Calendar',
+	Queues = 'Queues',
+	// Additional Modules
+	Ai = 'AI',
+}
+
+export enum PermissionAction {
+	Add = 'ADD',
+	View = 'VIEW',
+	Edit = 'EDIT',
+	// Delete = 'DELETE',
+	// Activate = 'ACTIVATE',
+	// Deactivate = 'DEACTIVATE',
+}

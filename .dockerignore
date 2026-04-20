@@ -1,0 +1,15 @@
+node_modules
+dist
+coverage
+.git
+.gitignore
+.env
+.env.*
+.husky
+.vscode
+.idea
+*.log
+npm-debug.log*
+.DS_Store
+README.md
+test

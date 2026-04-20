@@ -1,0 +1,27 @@
+set -e
+
+echo "✏️ formatting the code using prettier..."
+STAGED_PRETTIER_FILES=$(
+  git diff --cached --name-only --diff-filter=ACMR \
+    | grep -E '\.(ts|yml|js|json|mjs|cjs)$' \
+    || true
+)
+if [ -n "$STAGED_PRETTIER_FILES" ]; then
+  echo "$STAGED_PRETTIER_FILES" | xargs npx prettier --write --config ./.prettierrc
+  echo "$STAGED_PRETTIER_FILES" | xargs git add
+else
+  echo "No staged files need Prettier formatting."
+fi
+echo "🎉 Done formatting!"
+
+echo "👷 linting the code using eslint..."
+npm run lint
+echo "🎉 Done linting!"
+
+echo "🔍 checking files..."
+npm run file-check
+echo "✅ Files are valid!"
+
+# echo "🧪 testing the code using jest..."
+# npm run test
+# echo "🎉 Done testing!"

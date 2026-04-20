@@ -1,0 +1,5 @@
+set -e
+
+echo '🔍 checking branch name...'
+npm run branch-check
+echo "✅ Branch name is valid!"

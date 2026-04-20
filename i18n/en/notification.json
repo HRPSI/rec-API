@@ -1,0 +1,8 @@
+{
+    "EMPLOYEES_STATUS_UPDATED_TITLE": "Employees Status Updated",
+    "EMPLOYEES_STATUS_UPDATED_MESSAGE": "Hello {{name}}, {{count}} employee records were recalculated after the required field change. Previous statuses: {{previousStatuses}}. Current statuses: {{currentStatuses}}. Summary: {{transitionSummary}}. Effective date: {{effectiveDate}}.",
+    "BANK_ACCOUNT_EXPIRING_TITLE": "Bank Account Expiring Soon",
+    "BANK_ACCOUNT_EXPIRING_MESSAGE": "Bank account \"{{accountName}}\" ({{bankName}}) will expire in {{timeRemaining}}. Please take the necessary action before it is deactivated.",
+    "BANK_ACCOUNT_EXPIRED_TITLE": "Bank Account Deactivated",
+    "BANK_ACCOUNT_EXPIRED_MESSAGE": "Bank account \"{{accountName}}\" ({{bankName}}) has reached its end date and has been deactivated."
+}

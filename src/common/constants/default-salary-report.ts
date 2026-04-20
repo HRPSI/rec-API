@@ -1,0 +1,17 @@
+export const SALARY_COLUMNS: { header: string; key: string }[] = [
+	{ header: 'Employee ID', key: 'employeeId' },
+	{ header: 'Reference Code', key: 'referenceCode' },
+	{ header: 'Employee Name', key: 'employeeName' },
+	{ header: 'Salary Name', key: 'salaryName' },
+	{ header: 'Type', key: 'type' },
+	{ header: 'Periodic Amount', key: 'periodicAmount' },
+	{ header: 'Currency', key: 'currency' },
+	{ header: 'Occurrence', key: 'occurrence' },
+	{ header: 'Pay Unit', key: 'payUnit' },
+	{ header: 'Pay Account', key: 'payAccount' },
+	{ header: 'Gross Up', key: 'isGrossUp' },
+	{ header: 'Start Date', key: 'startDate' },
+	{ header: 'End Date', key: 'endDate' },
+	{ header: 'Active', key: 'isActive' },
+	{ header: 'Created At', key: 'createdAt' },
+];

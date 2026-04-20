@@ -1,0 +1,8 @@
+{
+    "EMPLOYEES_STATUS_UPDATED_TITLE": "تم تحديث حالة الموظفين بنجاح",
+    "EMPLOYEES_STATUS_UPDATED_MESSAGE": "مرحباً {{name}}، تم إعادة احتساب حالة {{count}} من الموظفين بعد تعديل الحقول الإلزامية. الحالات السابقة: {{previousStatuses}}. الحالات الحالية: {{currentStatuses}}. الملخص: {{transitionSummary}}. تاريخ السريان: {{effectiveDate}}.",
+    "BANK_ACCOUNT_EXPIRING_TITLE": "حساب بنكي على وشك الانتهاء",
+    "BANK_ACCOUNT_EXPIRING_MESSAGE": "الحساب البنكي \"{{accountName}}\" ({{bankName}}) سينتهي خلال {{timeRemaining}}. يرجى اتخاذ الإجراء اللازم قبل تعطيله.",
+    "BANK_ACCOUNT_EXPIRED_TITLE": "تم تعطيل الحساب البنكي",
+    "BANK_ACCOUNT_EXPIRED_MESSAGE": "الحساب البنكي \"{{accountName}}\" ({{bankName}}) قد بلغ تاريخ انتهائه وتم تعطيله."
+}

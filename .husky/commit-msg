@@ -1,0 +1,13 @@
+set -e
+
+echo "🕵️ Validating the commit message..."
+if ! npm run commitlint; then
+  echo "❌ Commit message invalid!"
+  echo "ℹ️ Required format: <ticket-number> :: <type>(optional-scope): <message>"
+  echo "ℹ️ Examples:"
+  echo "   869c4typy :: feat: move paygroup employees to another group"
+  echo "   869c4tynf :: refactor(employees): cleanup destroy, i18, path alias"
+  exit 1
+fi
+
+echo "✅ Commit message is valid!"
